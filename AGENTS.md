@@ -23,6 +23,12 @@ Usage notes:
 <available_skills>
 
 <skill>
+<name>backend-dev</name>
+<description>作为后端专家，基于接口需求和数据库设计开发 Node.js 后端程序，并输出标准完整的正式 API 接口文档。Use when users ask for Node.js backend development, API implementation, service architecture, database-driven backend coding, or formal API documentation.</description>
+<location>project</location>
+</skill>
+
+<skill>
 <name>db-design</name>
 <description>Design relational database schema (tables/fields/keys/ER diagram) from a uni-app mini program business workflow. Use this skill whenever the user mentions “数据库表设计/数据库建模/ER图/第三范式/Schema/数据模型/字段设计/主键外键/DDL/建表语句”，or when they provide a business flow and ask you to convert it into a database mode for efficient storage and correct mini-program behavior.</description>
 <location>project</location>
@@ -31,6 +37,12 @@ Usage notes:
 <skill>
 <name>frontend-design</name>
 <description>Create distinctive, production-grade frontend interfaces with high design quality. Use this skill when the user asks to build web components, pages, artifacts, posters, or applications (examples include websites, landing pages, dashboards, React components, HTML/CSS layouts, or when styling/beautifying any web UI). Generates creative, polished code and UI design that avoids generic AI aesthetics.</description>
+<location>project</location>
+</skill>
+
+<skill>
+<name>frontend-dev</name>
+<description>作为前端专家开发高质量前端页面，尤其擅长 uni-app 小程序项目，并能梳理接口需求、输出接口需求文档以指导后端开发。Use when users ask for frontend development, uniapp/uni-app mini program pages, UI implementation, frontend architecture, or API requirement drafting.</description>
 <location>project</location>
 </skill>
 
