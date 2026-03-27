@@ -5,6 +5,7 @@
     "minified": true,
     "uglifyFileName": false,
     "enhance": true,
+    "lazyCodeLoading": "requiredComponents",
     "packNpmRelationList": [],
     "babelSetting": {
       "ignore": [],
