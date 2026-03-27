@@ -1,1 +1,8 @@
 .DS_Store
+
+# uni-app / npm artifacts
+TakeYourMedicine-uniapp/node_modules/
+TakeYourMedicine-uniapp/.npm-cache/
+TakeYourMedicine-uniapp/dist/
+TakeYourMedicine-uniapp/unpackage/
+TakeYourMedicine-uniapp/.hbuilderx/
