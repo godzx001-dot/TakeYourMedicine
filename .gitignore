@@ -6,3 +6,16 @@ TakeYourMedicine-uniapp/.npm-cache/
 TakeYourMedicine-uniapp/dist/
 TakeYourMedicine-uniapp/unpackage/
 TakeYourMedicine-uniapp/.hbuilderx/
+TakeYourMedicine-uniapp/.env
+
+# server artifacts
+server/node_modules/
+server/.npm-cache/
+server/.env
+
+# docs not required in git
+Doc/
+
+# local env secrets
+TakeYourMedicine-uniapp/.env
+server/.env

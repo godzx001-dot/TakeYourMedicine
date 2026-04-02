@@ -4,10 +4,12 @@
 `TakeYourMedicine-uniapp` 为 uni-app 小程序前端工程，当前包含单页“吃药打卡”界面。该页面支持固定用药时段卡片展示、通知邮箱输入、点击“吃药了”提交事件，并在成功后展示视觉反馈弹窗。
 
 ## 目录结构（前端相关）
-- `TakeYourMedicine-uniapp/pages/index/index.vue`：主页面
-- `TakeYourMedicine-uniapp/common/timeSlots.js`：用药时段静态配置
-- `TakeYourMedicine-uniapp/static/images/`：药片/药丸图标资源
-- `TakeYourMedicine-uniapp/manifest.json`、`pages.json`、`main.js`、`App.vue`、`uni.scss`：uni-app 基础工程文件
+- `TakeYourMedicine-uniapp/src/pages/index/index.vue`：主页面
+- `TakeYourMedicine-uniapp/src/components/SuccessModal.vue`：成功反馈弹窗组件
+- `TakeYourMedicine-uniapp/src/common/timeSlots.js`：用药时段静态配置
+- `TakeYourMedicine-uniapp/src/static/images/`：药片/药丸图标资源
+- `TakeYourMedicine-uniapp/src/manifest.json`、`src/pages.json`、`src/main.js`、`src/App.vue`、`src/uni.scss`：uni-app 基础工程文件
+- `TakeYourMedicine-uniapp/project.config.json`：微信开发者工具工程配置（已开启 requiredComponents 按需注入）
 
 ## 页面结构与模块说明
 ### 1. 头部区域
@@ -29,9 +31,10 @@
 - 前端校验邮箱格式
 
 ### 5. 成功反馈弹窗
-- 点击成功后展示自定义弹窗
+- 点击成功后展示自定义弹窗组件（`SuccessModal`）
 - 内容包括：成功图标、标题、描述、确认按钮
 - 默认 1.8s 自动关闭，也支持手动关闭
+- 页面已配置小程序占位组件策略（配合 `lazyCodeLoading=requiredComponents`）
 
 ## 关键交互逻辑
 ### 邮箱校验
@@ -67,12 +70,21 @@
 
 ### B. 接口定义
 - Method：POST
-- Path：`/medicine-events`
-- 请求头：`Content-Type: application/json`
+- Path：`/api/v1/medicine-events`
+- Base URL：`https://take-your-medicine-239422-10-1416784837.sh.run.tcloudbase.com`
+- 小程序真机优先调用：`wx.cloud.callContainer`
+  - env：`cloud1-8gxk6av7dfc758c1`
+  - path：`/api/v1/medicine-events`
+  - method：`POST`
+- 请求头：
+  - `Content-Type: application/json`
+  - `x-user-openid: <openid>`（当前使用本地缓存或邮箱兜底）
 - Body：
   - `email` (string, required) 通知邮箱
   - `clickedAt` (string, required) ISO 时间戳
   - `source` (string, required) 固定 `mp-weixin`
+  - `doseTypeCode` (string, optional) AM/MID/NIGHT（当前前端未传，后端会按时间自动推导）
+  - `clientRequestId` (string, optional) 幂等键（UUID）
 
 示例：
 ```json
@@ -87,26 +99,31 @@
 - 成功：`200/201`
 - 失败：`4xx/5xx`
 
-推荐统一响应：
+当前后端统一响应：
 ```json
 {
   "code": 0,
   "message": "ok",
   "data": {
-    "eventId": "evt_123"
-  }
+    "eventId": "evt_slot_1",
+    "notificationId": "1",
+    "status": "RECORDED",
+    "acceptedAt": "2026-03-27T12:30:00.000Z"
+  },
+  "traceId": "6b3fd9c05f264f9b"
 }
 ```
 
 ### D. 前端约束
 - `email` 必须有效格式
 - `clickedAt` 使用 ISO 8601
-- 接口需保证幂等（可基于 `email + clickedAt + source` 或 `client_request_id`）
+- 接口需保证幂等（后端按 `dose_slot` 唯一约束 + 可选 `clientRequestId`）
 
 ### E. 联调验收
 - 成功用例：合法邮箱 + 正常响应
 - 失败用例：邮箱为空/格式错误/接口超时
 - 校验点：返回 code 与 message 正确、失败时前端可提示
+- 当前线上联调地址：`https://take-your-medicine-239422-10-1416784837.sh.run.tcloudbase.com`
 
 ## 本地运行建议
 使用 HBuilderX 或 `uni-app` CLI 运行小程序模式，确保 `pages.json` 中页面路径已正确配置。
