@@ -35,7 +35,7 @@ export default {
   background: #ffffff;
   box-shadow: 0 24rpx 60rpx rgba(3, 55, 39, 0.32);
   text-align: center;
-  animation: successPop 0.28s ease;
+  opacity: 1;
 }
 
 .success-badge {
@@ -81,14 +81,4 @@ export default {
   border: none;
 }
 
-@keyframes successPop {
-  0% {
-    transform: scale(0.92);
-    opacity: 0.6;
-  }
-  100% {
-    transform: scale(1);
-    opacity: 1;
-  }
-}
 </style>
